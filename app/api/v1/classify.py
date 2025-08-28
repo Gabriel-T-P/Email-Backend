@@ -4,6 +4,7 @@ from app.services.classifier_service import classify_email
 
 router = APIRouter()
 
+
 @router.post("/", response_model=EmailResponse)
 def classify_email_endpoint(email: EmailRequest):
     """
