@@ -1,3 +1,6 @@
+#git
+.gitignore
+
 # Ambiente virtual
 venv_email/
 venv/
