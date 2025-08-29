@@ -2,6 +2,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException
 
 router = APIRouter()
 
+
 @router.post(
     "/file",
     summary="Classificar email a partir de arquivo (.txt ou .pdf)",
