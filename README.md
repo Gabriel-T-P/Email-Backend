@@ -109,6 +109,7 @@ app/
 setup_nltk.py                   # Script para baixar recursos do NLTK
 tests/
 ├── test_classify.py            # Testes unitários para classificação de texto
-└── test_upload.py              # Testes unitários para upload de arquivos
+├── test_upload.py              # Testes unitários para upload de arquivos
+└── utils.py                    # helpers reutilizáveis nos testes
 ```
 

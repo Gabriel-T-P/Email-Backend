@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
+
 class EmailInput(BaseModel):
     content: str
 

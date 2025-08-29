@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.v1.endpoints import classify
+from app.api.v1 import classify
 
 app = FastAPI(
     title="Email Classifier API",

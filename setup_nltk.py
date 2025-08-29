@@ -5,7 +5,7 @@ def setup_nltk():
     Faz o download dos pacotes necessários do NLTK
     para processamento de linguagem natural.
     """
-    packages = ["punkt", "stopwords"]
+    packages = ["punkt", "stopwords", "punkt_tab"]
 
     for pkg in packages:
         try:
