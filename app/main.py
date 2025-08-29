@@ -8,4 +8,5 @@ app = FastAPI(
 )
 
 # Inclui rotas da API
-app.include_router(classify.router, prefix="/api/v1/classify", tags=["classify"])
+app.include_router(classifier_router, prefix="/api/v1")
+app.include_router(upload_router, prefix="/api/v1")
