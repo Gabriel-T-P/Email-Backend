@@ -9,3 +9,10 @@ def make_pdf_bytes(text: str) -> bytes:
     c.save()
     pdf_bytes.seek(0)
     return pdf_bytes.read()
+
+def make_txt_bytes(text: str) -> bytes:
+    """
+    Gera um arquivo TXT em memória com o texto passado.
+    Retorna os bytes do TXT.
+    """
+    return text.encode("utf-8")

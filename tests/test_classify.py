@@ -9,7 +9,7 @@ client = TestClient(app)
     [
         ("Preciso de atualização do meu pedido", "Produtivo"),
         ("Feliz Natal a todos!", "Improdutivo"),
-        ("Obrigado pelo suporte", "Produtivo"),
+        ("Obrigado pelo suporte", "Improdutivo"),
         ("Problema com meu pedido", "Produtivo"),
         ("@cliente #pedido 123!!!", "Produtivo"),  # depende das regras do mock
         ("", "Produtivo"),  # texto vazio

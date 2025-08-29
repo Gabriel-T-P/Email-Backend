@@ -4,7 +4,7 @@ def classify_email(text: str) -> dict:
     Futuramente, vai usar um modelo ML.
     """
 
-    if "feliz" in text.lower() or "obrigado" in text.lower():
+    if ("feliz" in text.lower()) or ("obrig" in text.lower()):
         category = "Improdutivo"
         response = "Obrigado pela sua mensagem!"
     else:
