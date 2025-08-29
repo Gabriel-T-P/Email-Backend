@@ -1,4 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
+from app.services.nlp_service import process_file
+from app.services.classifier_service import classify_email
 
 router = APIRouter()
 
@@ -16,17 +18,19 @@ Recebe um arquivo `.txt` ou `.pdf`, extrai o conteúdo e retorna:
 )
 async def classify_file(file: UploadFile = File(...)):
     """
-    Endpoint que recebe arquivos `.txt` ou `.pdf`.
-    Ainda não implementa o processamento de NLP.
+    Endpoint que recebe arquivos `.txt` ou `.pdf` e aplica NLP.
     """
     if not file.filename.endswith((".txt", ".pdf")):
         raise HTTPException(status_code=400, detail="Formato de arquivo não suportado")
 
-    # Simulação do conteúdo extraído
-    dummy_content = "Feliz Natal e um próspero Ano Novo!"
+    file_bytes = await file.read()
+
+    processed_text = process_file(file_bytes, file.filename)
+
+    result = classify_email(processed_text)
 
     return {
-        "category": "Improdutivo",
-        "response": "Obrigado pela mensagem!",
-        "content": dummy_content,
+        "category": result["category"],
+        "response": result["response"],
+        "content": processed_text
     }

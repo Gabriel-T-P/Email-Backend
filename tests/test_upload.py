@@ -6,29 +6,33 @@ from tests.utils import make_pdf_bytes  # helper de PDF
 
 client = TestClient(app)
 
-def test_classify_file_txt():
-    file_content = b"Este eh um email de teste em TXT."
-    response = client.post(
-        "/api/v1/file",
-        files={"file": ("email.txt", io.BytesIO(file_content), "text/plain")},
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert data["category"] == "Improdutivo"
-    assert "response" in data
-    assert "content" in data
+@pytest.mark.parametrize(
+    "filename, content, expected_category, content_type",
+    [
+        ("email.txt", b"Preciso de atualizacao do meu pedido", "Produtivo", "text/plain"),
+        ("email.txt", b"Feliz Natal a todos", "Improdutivo", "text/plain"),
+        ("email.pdf", make_pdf_bytes("Problema com meu pedido"), "Produtivo", "application/pdf"),
+        ("email.pdf", make_pdf_bytes("Obrigado pelo suporte"), "Produtivo", "application/pdf"),
+    ]
+)
+def test_classify_file_valid(filename, content, expected_category, content_type):
+    # Prepara o arquivo para envio
+    if filename.endswith(".pdf") and isinstance(content, bytes):
+        file_content = io.BytesIO(content)
+    else:
+        file_content = io.BytesIO(content)
 
-def test_classify_file_pdf():
-    pdf_bytes = make_pdf_bytes("Conteúdo de teste em PDF")
     response = client.post(
         "/api/v1/file",
-        files={"file": ("email.pdf", io.BytesIO(pdf_bytes), "application/pdf")},
+        files={"file": (filename, file_content, content_type)},
     )
     assert response.status_code == 200
     data = response.json()
-    assert data["category"] == "Improdutivo"
+    assert data["category"] == expected_category
     assert "response" in data
     assert "content" in data
+    assert isinstance(data["content"], str)
+    assert len(data["content"]) > 0
 
 def test_classify_file_invalid_format():
     file_content = b"Sou uma imagem, nao um email"

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.api.v1 import classify
-from app.api.v1 import upload
+from app.api.v1.classify import router as classify_router
+from app.api.v1.upload import router as upload_router
 
 app = FastAPI(
     title="Email Classifier API",
@@ -9,5 +9,5 @@ app = FastAPI(
 )
 
 # Inclui rotas da API
-app.include_router(classify.router, prefix="/api/v1")
-app.include_router(upload.router, prefix="/api/v1")
+app.include_router(classify_router, prefix="/api/v1")
+app.include_router(upload_router, prefix="/api/v1")
