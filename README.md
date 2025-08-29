@@ -1,19 +1,25 @@
 # 📧 Email Classifier API
 
 Este projeto é uma API construída em **FastAPI** para classificar emails em **Produtivo** ou **Improdutivo** e sugerir respostas automáticas.  
-No momento, a API está com um classificador **mockado** (regra simples). Futuramente será integrado um modelo de Machine Learning com **scikit-learn**.
+Agora a API também suporta **upload de arquivos .txt e .pdf**, extraindo o conteúdo e processando-o.
 
 ---
 
 ## 🚀 Funcionalidades
 
-- Endpoint `/api/v1/classify/` que recebe um texto de email e retorna:
+- Endpoint `/api/v1/classify/` que recebe texto bruto de email e retorna:
   - Categoria (`Produtivo` ou `Improdutivo`)
   - Resposta sugerida
+
+- Endpoint `/api/v1/upload/` que permite enviar arquivos `.txt` ou `.pdf` e retorna:
+  - Texto extraído do arquivo
+  - Categoria e resposta sugerida
 
 - Documentação automática via **Swagger UI** em `/docs`.
 
 - Testes unitários básicos com **pytest**.
+
+- Pré-processamento de texto com **NLTK** (remoção de stopwords, lematização).
 
 ---
 
@@ -21,8 +27,8 @@ No momento, a API está com um classificador **mockado** (regra simples). Futura
 
 ### 1. Clonar o repositório
 ```bash
-git clone https://github.com/seu-usuario/email-classifier-api.git
-cd email-classifier-api
+git clone git@github.com:Gabriel-T-P/Email-Backend.git
+cd Email-Backend
 ```
 
 ### 2. Criar e ativar ambiente virtual
@@ -42,7 +48,7 @@ Você saberá que está ativo quando aparecer `(venv_email)` no início da linha
 ### 3. Instalar dependências
 O projeto separa dependências de produção e desenvolvimento:
 
-- **Produção (FastAPI + Uvicorn):**
+- **Produção (FastAPI, Uvicorn, PyPDF2, NLTK):**
 ```bash
 pip install -r requirements.txt
 ```
@@ -50,6 +56,12 @@ pip install -r requirements.txt
 - **Desenvolvimento (pytest, flake8):**
 ```bash
 pip install -r requirements-dev.txt
+```
+
+### 4. Baixar recursos do NLTK
+Antes de rodar a aplicação pela primeira vez, inicialize os recursos do NLTK:
+```bash
+python3 setup_nltk.py
 ```
 
 ---
@@ -84,15 +96,19 @@ Exemplo de teste:
 app/
 ├── api/
 │   └── v1/
-│       └── classify.py     # Endpoints da API
+│       ├── classify.py         # Endpoints da API
+│       └── upload.py           # Endpoint para upload de arquivos
 ├── core/
-│   └── config.py           # Configurações do projeto
+│   └── config.py               # Configurações do projeto
 ├── models/
-│   └── schemas.py          # Schemas Pydantic (request/response)
+│   └── schemas.py              # Schemas Pydantic (request/response)
 ├── services/
-│   └── classifier_service.py  # Lógica de classificação (mock inicial)
-├── main.py                 # Ponto de entrada da aplicação
+│   ├── classifier_service.py   # Lógica de classificação (mock inicial)
+│   └── nlp_service.py          # Lógica de pré-processamento NLP
+├── main.py                     # Ponto de entrada da aplicação
+setup_nltk.py                   # Script para baixar recursos do NLTK
 tests/
-└── test_classify.py        # Testes unitários com pytest
+├── test_classify.py            # Testes unitários para classificação de texto
+└── test_upload.py              # Testes unitários para upload de arquivos
 ```
 
