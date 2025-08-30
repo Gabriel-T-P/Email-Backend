@@ -1,5 +1,6 @@
 import time
 
+
 def classify_email(text: str) -> dict:
     start_time = time.time()
     word_count = len(text.split())

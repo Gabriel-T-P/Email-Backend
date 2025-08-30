@@ -5,6 +5,7 @@ from app.models.response import ClassifyResponse
 
 router = APIRouter()
 
+
 @router.post(
     "/file",
     response_model=ClassifyResponse,

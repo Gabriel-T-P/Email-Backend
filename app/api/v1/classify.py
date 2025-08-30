@@ -6,6 +6,7 @@ from app.services.nlp_service import preprocess_text
 
 router = APIRouter()
 
+
 @router.post(
     "/text",
     response_model=ClassifyResponse,
@@ -27,7 +28,7 @@ async def classify_text(email: EmailRequest):
     Endpoint que recebe texto puro de email, pré-processa e classifica.
     """
     processed_text = preprocess_text(email.text)
-    
+
     result = classify_email(processed_text)
 
     return result

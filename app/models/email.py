@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 
+
 class EmailRequest(BaseModel):
     text: str = Field(
         ...,
